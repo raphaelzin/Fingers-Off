@@ -15,13 +15,19 @@ struct Configuration {
 }
 
 enum RecurrentAction: String {
-    case spawnSaw, spawnPowerUp
+    case spawnSaw, spawnPowerUp, updateTimer
 }
 
 class GameManager {
     private unowned var  gameScene: GameScene
     private(set) var state: GameState = .waitingStart
     private let config = Configuration()
+    
+    private var startTimestamp: Date?
+    
+    var elapsedTime: TimeInterval? {
+        return startTimestamp?.timeIntervalSinceNow
+    }
     
     private(set) var score = 0 {
         didSet {
@@ -77,20 +83,29 @@ class GameManager {
     
     func endGame() {
         print("Should end game")
+        state = .finished
+        
+        gameScene.removeAction(forKey: RecurrentAction.spawnSaw.rawValue)
+        gameScene.removeAction(forKey: RecurrentAction.spawnPowerUp.rawValue)
+        gameScene.removeAction(forKey: RecurrentAction.updateTimer.rawValue)
     }
     
     func startGame() {
         state = .playing
+        startTimestamp = Date()
+        
         setupTimers()
         spawnPoint()
     }
     
-    func setupTimers() {
+    private func setupTimers() {
         let spawnSawAt = SKAction.run(spawnSaw)
         let wait = SKAction.wait(forDuration: config.sawSpawnInterval)
         
         let spawnSawGroup = SKAction.sequence([spawnSawAt, wait])
         gameScene.run(SKAction.repeatForever(spawnSawGroup), withKey: RecurrentAction.spawnSaw.rawValue)
+        
+        gameScene.timerUpdater()
     }
     
 }

@@ -9,14 +9,21 @@
 import SpriteKit
 import GameplayKit
 
+protocol GameStatsUpdaterDelegate: class {
+    func updateTimer(value: String)
+    func updateScore()
+}
+
 class GameScene: SKScene {
     
-    private var gameManager: GameManager!
+    private(set) lazy var gameManager: GameManager = .init(scene: self)
     
     private var lastUpdateTime : TimeInterval = 0
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
     private var velocity: CGPoint = .zero
+    
+    weak var statsUpdaterDelegate: GameStatsUpdaterDelegate?
     
     var movingFinger = false
     var pace: Saw.Pace = .normal
@@ -32,7 +39,6 @@ class GameScene: SKScene {
     
     override func sceneDidLoad() {
         self.lastUpdateTime = 0
-        gameManager = GameManager(scene: self)
         gameManager.setupGame()
         backgroundColor = .white
         physicsWorld.contactDelegate = self
@@ -52,7 +58,7 @@ class GameScene: SKScene {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard let touchLocation = touches.first?.location(in: self), movingFinger else { return }
+        guard let touchLocation = touches.first?.location(in: self), movingFinger, gameManager.state == .playing else { return }
         finger.position = touchLocation
     }
     
@@ -84,8 +90,17 @@ class GameScene: SKScene {
                 moveSprite(sprite: saw, velocity: moveSpriteTowards(location: fingerLocation,sprite: saw))
             }
         }
+        lastUpdateTime = currentTime
+    }
+    
+    func timerUpdater() {
+        let wait = SKAction.wait(forDuration: 0.1)
+        let updateTimer = SKAction.run { [weak self] in
+            self?.statsUpdaterDelegate?.updateTimer(value: "\(self!.gameManager.elapsedTime?.elapsedTimeFormat ?? "")")
+        }
+        let updateGroup = SKAction.sequence([wait, updateTimer])
         
-        self.lastUpdateTime = currentTime
+        run(SKAction.repeatForever(updateGroup), withKey: RecurrentAction.updateTimer.rawValue)
     }
 }
 
@@ -110,6 +125,5 @@ extension GameScene: SKPhysicsContactDelegate {
         default:
             print("Non relevant cases")
         }
-        
     }
 }

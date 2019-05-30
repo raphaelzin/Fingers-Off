@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C0A4BCC229F608F00488411 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C0A4BCB229F608F00488411 /* TimeInterval.swift */; };
 		1C4A1E27229A0CF70011EC9E /* Point.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1C4A1E26229A0CF70011EC9E /* Point.swift */; };
 		1CFD33932294512400F3B4F6 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CFD33922294512400F3B4F6 /* AppDelegate.swift */; };
 		1CFD33992294512400F3B4F6 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1CFD33982294512400F3B4F6 /* GameScene.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1C0A4BCB229F608F00488411 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		1C4A1E26229A0CF70011EC9E /* Point.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Point.swift; sourceTree = "<group>"; };
 		1CFD338F2294512400F3B4F6 /* FingersOff.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FingersOff.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1CFD33922294512400F3B4F6 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 			children = (
 				1CFD33AB2294542900F3B4F6 /* ArithmeticUtils.swift */,
 				1CFD33B42294684600F3B4F6 /* Array.swift */,
+				1C0A4BCB229F608F00488411 /* TimeInterval.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -189,6 +192,7 @@
 				1CFD33932294512400F3B4F6 /* AppDelegate.swift in Sources */,
 				1CFD33B12294613900F3B4F6 /* Saw.swift in Sources */,
 				1CFD33B32294616C00F3B4F6 /* ThemeController.swift in Sources */,
+				1C0A4BCC229F608F00488411 /* TimeInterval.swift in Sources */,
 				1C4A1E27229A0CF70011EC9E /* Point.swift in Sources */,
 				1CFD33AC2294542900F3B4F6 /* ArithmeticUtils.swift in Sources */,
 				1CFD33BB22948A1E00F3B4F6 /* Types.swift in Sources */,
